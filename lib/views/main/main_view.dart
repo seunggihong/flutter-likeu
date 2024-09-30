@@ -22,7 +22,20 @@ class _MainViewState extends State<MainView> {
       floatingActionButton: const Fab(),
 
       /// Body
-      body: Container(),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                "data",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
