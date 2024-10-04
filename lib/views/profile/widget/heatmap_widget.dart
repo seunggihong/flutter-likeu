@@ -31,7 +31,11 @@ class _HeatMapViewerState extends State<CustomHeatMapViewer> {
   /// Show Commit Count.
   void _changeCommitCount(value) {
     setState(() {
-      commit = datasets[value];
+      if (datasets[value] == null) {
+        commit = 0;
+      } else {
+        commit = datasets[value];
+      }
     });
   }
 
