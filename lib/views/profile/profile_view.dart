@@ -26,7 +26,7 @@ class _ProfileViewState extends State<ProfileView> {
               _loadProfileImageAndName(),
 
               /// Show User Chart that commit date.
-              const HeatMapViewer(),
+              const CustomHeatMapViewer(),
 
               /// Settings Menu.
               _settingsMenuList(context)
