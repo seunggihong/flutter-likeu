@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_expandable_fab: ^2.3.0
   fl_heatmap: ^0.4.5
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:
