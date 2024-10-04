@@ -13,6 +13,7 @@ class SettingMenuCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /// Navigate to Setting menu.
+        /// Open Modal sheet.
         print(menuNameString);
       },
       child: SizedBox(
