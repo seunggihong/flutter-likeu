@@ -34,7 +34,7 @@ packages:
     source: hosted
     version: "2.1.0"
   carousel_slider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: carousel_slider
       sha256: "7b006ec356205054af5beaef62e2221160ea36b90fb70a35e4deacd49d0349ae"

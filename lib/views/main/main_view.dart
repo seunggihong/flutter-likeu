@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:flutter_likeu/extensions/space_exs.dart';
+import 'package:flutter_likeu/views/main/components/ad_loader.dart';
 import 'package:flutter_likeu/views/main/components/fab.dart';
 
 class MainView extends StatefulWidget {
@@ -20,17 +22,19 @@ class _MainViewState extends State<MainView> {
       floatingActionButton: const Fab(),
 
       /// Body
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Center(
-              child: Text(
-                "data",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            )
+            20.h,
+
+            /// Custom Carouse Slider For Ad.
+            const ADCarouselSlider(),
+
+            /// User Graph
+
+            /// Player Slider
+
+            20.h,
           ],
         ),
       ),

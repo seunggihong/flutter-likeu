@@ -37,6 +37,7 @@ dependencies:
   flutter_expandable_fab: ^2.3.0
   flutter_heatmap_calendar: ^1.0.5
   camerawesome: ^2.1.0
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
