@@ -38,6 +38,8 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   camerawesome: ^2.1.0
   carousel_slider: ^5.0.0
+  fl_chart: ^0.69.0
+  mrx_charts: ^0.1.3
 
 dev_dependencies:
   flutter_test:

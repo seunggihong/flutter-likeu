@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_likeu/utils/app_colors.dart';
 
 class ADCarouselSlider extends StatelessWidget {
   const ADCarouselSlider({
@@ -9,11 +10,11 @@ class ADCarouselSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Color> testList = [
-      Colors.red,
-      Colors.blue,
-      Colors.white,
-      Colors.orange,
-      Colors.purple
+      AppColors.primaryColor,
+      AppColors.primaryColor,
+      AppColors.primaryColor,
+      AppColors.primaryColor,
+      AppColors.primaryColor,
     ];
 
     return CarouselSlider(
@@ -39,6 +40,9 @@ class ADCarouselSlider extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   "$i AD",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               );
             },
