@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/camera/components/custom_button.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -13,6 +14,18 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
+  XFile? path;
+  final ImagePicker picker = ImagePicker();
+
+  Future getImage(ImageSource imageSource) async {
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        path = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +68,7 @@ class _CameraViewState extends State<CameraView> {
           function: () {
             /// Open Gallery
             log('open gallery');
+            getImage(ImageSource.gallery);
           },
           buttonName: 'Gallery',
         ),

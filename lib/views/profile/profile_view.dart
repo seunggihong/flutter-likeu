@@ -11,7 +11,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   /// Local Storage save datas
-  static const String name = 'Seunggi hong';
+  static const String name = 'UserName';
 
   @override
   Widget build(BuildContext context) {
