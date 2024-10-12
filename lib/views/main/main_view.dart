@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
 import 'package:flutter_likeu/extensions/space_exs.dart';
-import 'package:flutter_likeu/views/main/components/ad_loader.dart';
-import 'package:flutter_likeu/views/main/components/chart_loader.dart';
-import 'package:flutter_likeu/views/main/components/fab.dart';
-import 'package:flutter_likeu/views/main/components/player_card.dart';
+import 'package:flutter_likeu/views/main/widget/ad_loader.dart';
+import 'package:flutter_likeu/views/main/widget/chart_loader.dart';
+import 'package:flutter_likeu/views/main/widget/fab.dart';
+import 'package:flutter_likeu/views/main/widget/player_card.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});

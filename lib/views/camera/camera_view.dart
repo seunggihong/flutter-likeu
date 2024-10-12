@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
-import 'package:flutter_likeu/utils/app_colors.dart';
+// import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/camera/components/custom_button.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:image_picker/image_picker.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -14,17 +17,10 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  XFile? path;
-  final ImagePicker picker = ImagePicker();
+  File? _image;
+  final picker = ImagePicker();
 
-  Future getImage(ImageSource imageSource) async {
-    final XFile? pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile != null) {
-      setState(() {
-        path = XFile(pickedFile.path); //가져온 이미지를 _image에 저장
-      });
-    }
-  }
+  get getImage => null;
 
   @override
   Widget build(BuildContext context) {
@@ -34,50 +30,63 @@ class _CameraViewState extends State<CameraView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             60.h,
-            SizedBox(
-              height: 500,
-              child: Center(
-                child: Container(
-                  width: double.infinity,
-                  height: 500,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: const Text(
-                    "Selected Vedio",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
+
+            /// Image Loader
+            _loadPickerImageBox(),
 
             /// Open Gallery Or Camera Button Widget.
-            _openGalleryOrCameraButtonLoader()
+            _loadGalleryOrCameraButton()
           ],
         ));
   }
 
+  /// Image Picker Loader
+  Widget _loadPickerImageBox() {
+    return SizedBox(
+      height: 500,
+      child: Center(
+        child: Container(
+          width: double.infinity,
+          height: 500,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+          ),
+          child: _image == null
+              ? const Text(
+                  "Selected Vedio",
+                  textAlign: TextAlign.center,
+                )
+              : Image.file(_image!),
+        ),
+      ),
+    );
+  }
+
   /// Open Gallery Or Camera Button Widget.
-  Widget _openGalleryOrCameraButtonLoader() {
+  Widget _loadGalleryOrCameraButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomButton(
-          function: () {
-            /// Open Gallery
-            log('open gallery');
-            getImage(ImageSource.gallery);
+          function: () async {
+            final pickedImage =
+                await picker.pickImage(source: ImageSource.gallery);
+            log("gallery");
+            setState(() {
+              if (pickedImage != null) {
+                _image = File(pickedImage.path);
+              } else {
+                log("Not Picked Images");
+              }
+            });
           },
           buttonName: 'Gallery',
         ),
         20.w,
         CustomButton(
-          function: () {
-            /// Open Camera
-            log("open camera");
-          },
+          function: () {},
           buttonName: 'Camera',
         )
       ],

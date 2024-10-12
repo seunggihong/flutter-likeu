@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_likeu/views/profile/components/menu_card.dart';
+import 'package:flutter_likeu/views/profile/widget/menu_card.dart';
 import 'package:flutter_likeu/views/profile/widget/heatmap_widget.dart';
 
 class ProfileView extends StatefulWidget {

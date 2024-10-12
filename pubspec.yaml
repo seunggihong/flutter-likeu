@@ -38,6 +38,8 @@ dependencies:
   fl_chart: ^0.69.0
   mrx_charts: ^0.1.3
   image_picker: ^1.1.2
+  camerawesome: ^2.1.0
+  modal_bottom_sheet: ^3.0.0
   # Hive Database
 
 dev_dependencies:
