@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_likeu/views/profile/components/menu_card.dart';
+import 'package:flutter_likeu/views/profile/widget/menu_card.dart';
 import 'package:flutter_likeu/views/profile/widget/heatmap_widget.dart';
 
 class ProfileView extends StatefulWidget {
@@ -11,7 +11,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   /// Local Storage save datas
-  static const String name = 'Seunggi hong';
+  static const String name = 'UserName';
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,9 @@ import 'package:flutter_likeu/utils/app_colors.dart';
 
 import 'package:flutter_likeu/views/main/main_view.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
