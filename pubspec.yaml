@@ -41,6 +41,8 @@ dependencies:
   camerawesome: ^2.1.0
   modal_bottom_sheet: ^3.0.0
   # Hive Database
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +51,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
   # Hive Database
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.13
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,6 +71,11 @@ flutter:
 
   assets:
     - assets/imgs/profile_test.jpeg
+    - assets/imgs/curry.jpg
+    - assets/imgs/Johnson.jpg
+    - assets/imgs/Jordan.jpg
+    - assets/imgs/LeBron.jpg
+    - assets/imgs/ONeal.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

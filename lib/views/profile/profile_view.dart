@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/profile/widget/menu_card.dart';
 import 'package:flutter_likeu/views/profile/widget/heatmap_widget.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -11,7 +13,21 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   /// Local Storage save datas
-  static const String name = 'UserName';
+  String name = 'UserName';
+  String changeName = '';
+
+  /// Hive Database
+  final hivebox = Hive.box('users');
+
+  @override
+  void initState() {
+    if (hivebox.get('name') == null) {
+      hivebox.put('name', name);
+    } else {
+      name = hivebox.get('name');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +96,9 @@ class _ProfileViewState extends State<ProfileView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
                   fontSize: 20,
@@ -92,6 +108,65 @@ class _ProfileViewState extends State<ProfileView> {
                 iconSize: 20,
                 onPressed: () {
                   /// Edit Name.
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          backgroundColor: Colors.grey,
+                          child: SizedBox(
+                            height: 150,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: TextField(
+                                    cursorColor: Colors.black,
+                                    decoration: const InputDecoration(
+                                      focusColor: AppColors.primaryColor,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppColors.primaryColor,
+                                          width: 3,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppColors.primaryColor,
+                                          width: 3,
+                                        ),
+                                      ),
+                                      labelText: 'Name',
+                                      labelStyle:
+                                          TextStyle(color: Colors.black),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        changeName = value.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      if (changeName != '') {
+                                        setState(() {
+                                          name = changeName;
+                                          changeName = '';
+                                        });
+                                        hivebox.put('name', name);
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ))
+                              ],
+                            ),
+                          ),
+                        );
+                      });
                 },
                 icon: const Icon(
                   Icons.edit,
