@@ -28,7 +28,7 @@ class UserGraphLoader extends StatelessWidget {
                     x: ChartAxisSettingsAxis(
                       frequency: 1,
                       max: DateTime.now().day.toDouble(),
-                      min: DateTime.now().day.toDouble() - 6,
+                      min: DateTime.now().day.toDouble() - 7,
                       textStyle: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
