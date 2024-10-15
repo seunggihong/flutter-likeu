@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 // import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/camera/components/custom_button.dart';
+import 'package:flutter_likeu/views/camera/components/result_viewer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:image_picker/image_picker.dart';
 
@@ -21,6 +23,16 @@ class _CameraViewState extends State<CameraView> {
   final picker = ImagePicker();
 
   get getImage => null;
+
+  // List<String> playerName = [
+  //   'Stephen Curry',
+  //   'Michael Jordan',
+  //   'LeBron James',
+  //   'Shaquille ONeal',
+  //   'Magic Johnson'
+  // ];
+
+  // String dropdownItem = 'Stephen Curry';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +55,7 @@ class _CameraViewState extends State<CameraView> {
   /// Image Picker Loader
   Widget _loadPickerImageBox() {
     return SizedBox(
-      height: 500,
+      height: 400,
       child: Center(
         child: Container(
           width: double.infinity,
@@ -55,7 +67,7 @@ class _CameraViewState extends State<CameraView> {
           ),
           child: _image == null
               ? const Text(
-                  "Selected Vedio",
+                  "Selected Video",
                   textAlign: TextAlign.center,
                 )
               : Image.file(_image!),
@@ -66,7 +78,7 @@ class _CameraViewState extends State<CameraView> {
 
   /// Open Gallery Or Camera Button Widget.
   Widget _loadGalleryOrCameraButton() {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomButton(
@@ -77,17 +89,30 @@ class _CameraViewState extends State<CameraView> {
             setState(() {
               if (pickedImage != null) {
                 _image = File(pickedImage.path);
-              } else {
-                log("Not Picked Images");
               }
             });
           },
           buttonName: 'Gallery',
         ),
-        20.w,
+        20.h,
         CustomButton(
-          function: () {},
-          buttonName: 'Camera',
+          function: () {
+            log('UpLoad');
+            if (_image != null) {
+              Navigator.push(
+                context,
+                CupertinoModalBottomSheetRoute(
+                    builder: (e) => const ResultViewer(), expanded: false),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Selected Video!"),
+                ),
+              );
+            }
+          },
+          buttonName: 'UpLoad',
         )
       ],
     );

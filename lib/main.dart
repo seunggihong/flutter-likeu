@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
 
 import 'package:flutter_likeu/views/main/main_view.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('users');
+
   runApp(const MyApp());
 }
 
