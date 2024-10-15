@@ -50,10 +50,10 @@ class UserGraphLoader extends StatelessWidget {
                 ChartLineLayer(
                   /// Data
                   items: List.generate(
-                    DateTime.now().day - 6,
+                    DateTime.now().day - 7,
                     (index) => ChartLineDataItem(
                       value: Random().nextInt(100).toDouble(),
-                      x: index.toDouble() + 7,
+                      x: index.toDouble() + 8,
                     ),
                   ),
                   settings: const ChartLineSettings(

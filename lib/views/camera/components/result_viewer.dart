@@ -1,9 +1,10 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/camera/components/custom_button.dart';
+import 'package:hive/hive.dart';
 
 class ResultViewer extends StatefulWidget {
   const ResultViewer({super.key});
@@ -13,7 +14,9 @@ class ResultViewer extends StatefulWidget {
 }
 
 class _ResultViewerState extends State<ResultViewer> {
-  int percent = 99;
+  int percent = Random().nextInt(100);
+
+  final hivebox = Hive.box('users');
 
   String explaneText =
       'When you compare the postures of Stephen Curry and yours, they are about 20% similar.';
@@ -72,7 +75,18 @@ class _ResultViewerState extends State<ResultViewer> {
             // BarChart(BarChartData())
             CustomButton(
               function: () {
-                log('save');
+                if (hivebox.get('percent') == null) {
+                  hivebox.put('percent', [
+                    [DateTime.now(), percent]
+                  ]);
+                } else {
+                  List prev = hivebox.get('percent').toList();
+                  prev.add([DateTime.now(), percent]);
+                  print(prev);
+                  hivebox.put('percent', prev);
+                }
+
+                print(hivebox.get('percent'));
                 Navigator.pop(context);
               },
               buttonName: 'Save',
