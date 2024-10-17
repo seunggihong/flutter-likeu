@@ -10,6 +10,22 @@ class PlayerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> playerName = [
+      'Stephen Curry',
+      'Michael Jordan',
+      'LeBron James',
+      'Shaquille ONeal',
+      'Magic Johnson'
+    ];
+
+    List<String> playerImage = [
+      'assets/imgs/curry.jpg',
+      'assets/imgs/Jordan.jpg',
+      'assets/imgs/LeBron.jpg',
+      'assets/imgs/ONeal.jpg',
+      'assets/imgs/Johnson.jpg',
+    ];
+
     return CarouselSlider(
       options: CarouselOptions(
         height: 350.0,
@@ -38,7 +54,7 @@ class PlayerCard extends StatelessWidget {
                   children: [
                     10.h,
                     Text(
-                      "$i Player Card",
+                      playerName[i - 1],
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -48,19 +64,16 @@ class PlayerCard extends StatelessWidget {
 
                     /// Plater Image
                     SizedBox(
-                      width: 250,
-                      height: 250,
-                      child: Container(
-                        decoration: const BoxDecoration(color: Colors.white),
-                      ),
-                    ),
+                        width: 250,
+                        height: 250,
+                        child: Image.asset(playerImage[i - 1])),
 
                     /// Like Button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          "$i player name",
+                          playerName[i - 1],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         IconButton(
