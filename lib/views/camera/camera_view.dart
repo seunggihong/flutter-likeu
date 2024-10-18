@@ -110,6 +110,7 @@ class _CameraViewState extends State<CameraView> {
   Future<void> requestVideoToFlask(XFile videoPath) async {
     // Flask_url을 dotenv에 작성해서 사용함
     String serverUrl = dotenv.get("FLASK_URL");
+    log(serverUrl);
 
     setState(() {
       _isLoading = true; // Start loading
@@ -125,6 +126,8 @@ class _CameraViewState extends State<CameraView> {
       if (response.statusCode == 200) {
         // Save CSV file
         final bytes = await response.stream.toBytes();
+
+        // 이걸 Hivd로 넣을 예정.
         final directory = await getApplicationDocumentsDirectory();
         final csvFile = File('${directory.path}/output.csv');
         await csvFile.writeAsBytes(bytes);
