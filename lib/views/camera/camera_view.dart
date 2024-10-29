@@ -129,6 +129,8 @@ class _CameraViewState extends State<CameraView> {
 
         // 이걸 Hivd로 넣을 예정.
         final directory = await getApplicationDocumentsDirectory();
+
+        // 여기에서 저장 안하고 분석한 데이터 결과를 Hive 데이터 베이스에 넣을 예정.
         final csvFile = File('${directory.path}/output.csv');
         await csvFile.writeAsBytes(bytes);
 
