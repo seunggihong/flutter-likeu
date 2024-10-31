@@ -3,7 +3,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/views/main/widget/ad_loader.dart';
-import 'package:flutter_likeu/views/main/widget/chart_loader.dart';
+// import 'package:flutter_likeu/views/main/widget/chart_loader.dart';
 import 'package:flutter_likeu/views/main/widget/fab.dart';
 import 'package:flutter_likeu/views/main/widget/player_card.dart';
 
@@ -42,7 +42,33 @@ class _MainViewState extends State<MainView> {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
 
-            const UserGraphLoader(),
+            // SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         margin: EdgeInsets.all(10),
+            //         width: 300,
+            //         height: 150,
+            //         decoration: BoxDecoration(color: Colors.white),
+            //       ),
+            //       Container(
+            //         margin: EdgeInsets.all(10),
+            //         width: 300,
+            //         height: 150,
+            //         decoration: BoxDecoration(color: Colors.white),
+            //       ),
+            //       Container(
+            //         margin: EdgeInsets.all(10),
+            //         width: 300,
+            //         height: 150,
+            //         decoration: BoxDecoration(color: Colors.white),
+            //       )
+            //     ],
+            //   ),
+            // ),
+
+            // const UserGraphLoader(),
 
             /// Player Slider
             20.h,
