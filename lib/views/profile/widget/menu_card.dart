@@ -14,7 +14,6 @@ class SettingMenuCard extends StatelessWidget {
       onTap: () {
         /// Navigate to Setting menu.
         /// Open Modal sheet.
-        print(menuNameString);
       },
       child: SizedBox(
         width: double.infinity,
