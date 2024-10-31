@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
+import 'package:flutter_likeu/views/camera/camera_view.dart';
 // import 'package:flutter_likeu/views/camera/camera_view.dart';
-import 'package:flutter_likeu/views/camera/camera_view_test.dart';
 
 /// Views
 import 'package:flutter_likeu/views/chart/chart_view.dart';
@@ -53,7 +53,7 @@ class Fab extends StatelessWidget {
 
               /// test code
               Navigator.push(context,
-                  CupertinoPageRoute(builder: (_) => const CameraViewTest()));
+                  CupertinoPageRoute(builder: (_) => const CameraView()));
               // Navigator.push(context,
               //     CupertinoPageRoute(builder: (_) => const CameraView()));
             },
