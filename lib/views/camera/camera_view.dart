@@ -11,6 +11,7 @@ import 'package:flutter_likeu/views/camera/widget/progress_circular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
+import 'package:hive_flutter/hive_flutter.dart';
 
 class CameraView extends StatefulWidget {
   const CameraView({super.key});
@@ -42,11 +43,15 @@ class _CameraViewState extends State<CameraView> {
   int userArmDegree = 20;
   int userTiming = 1;
 
+  /// Hive Database
+  final hivebox = Hive.box('users');
+
   @override
   void initState() {
     setState(() {
       selectPlayer = players[0];
     });
+    log('${hivebox.get('percent')}');
     super.initState();
   }
 
@@ -173,21 +178,7 @@ class _CameraViewState extends State<CameraView> {
               CustomButton(
                 function: () {
                   if (_video != null && selectPlayer != 'Select Player') {
-                    //requestVideoToFlask(_video!);
                     requsetVideoToFlask(_video!);
-                    // Navigator.push(
-                    //   context,
-                    //   CupertinoModalBottomSheetRoute(
-                    //     builder: (e) => CustomBottomModal(
-                    //       isLoading: isLoading,
-                    //       percentage: percentage,
-                    //       selectPlayer: selectPlayer,
-                    //       userArmDegree: userArmDegree,
-                    //       userTiming: userTiming,
-                    //     ),
-                    //     expanded: false,
-                    //   ),
-                    // );
                   } else if (selectPlayer == 'Select Player') {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Choose Player!")));

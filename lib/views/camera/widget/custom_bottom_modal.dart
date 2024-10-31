@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/views/camera/widget/custom_button.dart';
 import 'package:flutter_likeu/views/camera/widget/progress_circular.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 class CustomBottomModal extends StatelessWidget {
   const CustomBottomModal({
@@ -21,6 +25,9 @@ class CustomBottomModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Hive Database
+    final hivebox = Hive.box('users');
+
     return Container(
       height: 600,
       decoration: BoxDecoration(
@@ -53,7 +60,31 @@ class CustomBottomModal extends StatelessWidget {
                   ),
                 ),
                 20.h,
-                CustomButton(function: () {}, buttonName: "Save")
+                CustomButton(
+                  function: () {
+                    /// 데이터 추가 로직 구성
+                    if (hivebox.get('percent') == null) {
+                      hivebox.put('percent', [
+                        [
+                          DateFormat("yyyyMMdd").format(DateTime.now()),
+                          selectPlayer,
+                          percentage
+                        ]
+                      ]);
+                    } else {
+                      List<dynamic> list = hivebox.get('percent');
+                      list.add([
+                        DateFormat("yyyyMMdd").format(DateTime.now()),
+                        selectPlayer,
+                        percentage
+                      ]);
+                      hivebox.put('percent', list);
+                    }
+
+                    log("${hivebox.get('percent')}");
+                  },
+                  buttonName: "Save",
+                )
               ],
             ),
     );
