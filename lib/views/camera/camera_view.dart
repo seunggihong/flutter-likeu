@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -21,14 +23,7 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  final players = [
-    'Select Player',
-    'player 1',
-    'player 2',
-    'player 3',
-    'player 4',
-    'player 5'
-  ];
+  final players = ['Select Player', 'booker', 'Comming Soon...'];
   String? selectPlayer;
 
   /// Video Select
@@ -39,7 +34,7 @@ class _CameraViewState extends State<CameraView> {
   bool isLoading = false;
 
   /// User Simillar
-  int percentage = 10;
+  int percentage = 0;
   int userArmDegree = 20;
   int userTiming = 1;
 
@@ -56,7 +51,7 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Future<void> requsetVideoToFlask(XFile videoPath) async {
-    String serverUrl = dotenv.get("FLASK_URL");
+    String serverUrl = "${dotenv.get("FLASK_URL")}/${selectPlayer!}";
     setState(() {
       isLoading = true;
     });
@@ -72,10 +67,19 @@ class _CameraViewState extends State<CameraView> {
         var res = await req.send();
 
         if (res.statusCode == 200) {
-          log('$res');
+          var responseString = await res.stream.bytesToString();
+          var jsonRes = json.decode(responseString);
+
+          log("${jsonRes[0]['similarity_percentage']}");
+          setState(() {
+            percentage = jsonRes[0]['similarity_percentage'];
+          });
+          log("$percentage");
 
           /// json data
           ///
+        } else {
+          log("${res.statusCode}");
         }
       } catch (e) {
         log("$e");
@@ -117,10 +121,10 @@ class _CameraViewState extends State<CameraView> {
               60.h,
 
               /// Player Select Dropbox
-              CustomText(text: "What kind of Player?"),
+              CustomText(text: "어떤 선수가 되고 싶나요?"),
               Container(
                 alignment: Alignment.centerRight,
-                width: 180,
+                width: 200,
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(10),
@@ -149,7 +153,7 @@ class _CameraViewState extends State<CameraView> {
               20.h,
 
               /// Select User Video
-              CustomText(text: "Choose your Video!"),
+              CustomText(text: "비디오를 선택해 주세요!"),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
@@ -174,7 +178,7 @@ class _CameraViewState extends State<CameraView> {
               20.h,
 
               /// Upload to Server from Flutter that User Video.
-              CustomText(text: "Let's Started!"),
+              CustomText(text: "시작!"),
               CustomButton(
                 function: () {
                   if (_video != null && selectPlayer != 'Select Player') {

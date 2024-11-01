@@ -16,20 +16,25 @@ class _HeatMapViewerState extends State<CustomHeatMapViewer> {
 
   final hivebox = Hive.box('users');
 
-  Map<DateTime, int> datasets = {
-    DateTime(2024, 10, 1): 10,
-    DateTime(2024, 10, 2): 30,
-    DateTime(2024, 10, 3): 40,
-    DateTime(2024, 10, 4): 70,
-    DateTime(2024, 10, 5): 90,
-    DateTime(2024, 10, 6): 10,
-  };
+  Map<DateTime, int> datasets = {};
 
   /// Heatmap Color sets.
   Map<int, Color> colorsets = AppColors.heatMapColor;
 
   /// Accuracy.
   int? accuracy = 0;
+
+  @override
+  void initState() {
+    if (hivebox.get('percent') != null) {
+      List<dynamic> data = hivebox.get('percent');
+      for (var element in data) {
+        DateTime date = DateTime.parse(element[0]);
+        datasets[date] = element[2];
+      }
+    }
+    super.initState();
+  }
 
   /// Show Accuracy.
   void _changeCommitCount(value) {

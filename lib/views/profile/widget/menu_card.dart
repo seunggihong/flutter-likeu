@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SettingMenuCard extends StatelessWidget {
   const SettingMenuCard({
@@ -10,10 +11,28 @@ class SettingMenuCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Container> menuList = [
+      Container(
+        width: double.infinity,
+        height: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Text(menuNameString),
+      )
+    ];
+
     return GestureDetector(
       onTap: () {
         /// Navigate to Setting menu.
         /// Open Modal sheet.
+        Navigator.push(
+          context,
+          CupertinoModalBottomSheetRoute(
+            builder: (_) => menuList[0],
+            expanded: false,
+          ),
+        );
       },
       child: SizedBox(
         width: double.infinity,
