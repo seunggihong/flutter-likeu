@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/views/camera/widget/custom_button.dart';
@@ -31,32 +29,40 @@ class CustomBottomModal extends StatelessWidget {
     return Container(
       height: 600,
       decoration: BoxDecoration(
-          color: Colors.grey, borderRadius: BorderRadius.circular(10)),
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: isLoading
           ? ProgressCircular()
           : Column(
               children: [
+                50.h,
+                Image.asset(
+                  'assets/basketball.png',
+                  width: 50,
+                  height: 50,
+                ),
                 20.h,
                 Text(
-                  "You are $percentage% like $selectPlayer",
+                  "당신은 $selectPlayer 선수와 \n$percentage% 비슷해요!",
                   style: TextStyle(
                     decoration: TextDecoration.none,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 20.h,
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "You would need to bend your arms about $userArmDegree degrees more and your timing would need to be about $userTiming second faster to be similar to the $selectPlayer.",
+                    "$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 $userArmDegree 정도 더 구부려 보세요!\n - 슛 타이밍을 약 $userTiming초 정도 더 빠르게 해보세요!",
                     style: TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 20.h,
@@ -81,9 +87,9 @@ class CustomBottomModal extends StatelessWidget {
                       hivebox.put('percent', list);
                     }
 
-                    log("${hivebox.get('percent')}");
+                    Navigator.pop(context);
                   },
-                  buttonName: "Save",
+                  buttonName: "저장",
                 )
               ],
             ),

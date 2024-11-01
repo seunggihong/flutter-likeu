@@ -82,6 +82,8 @@ flutter:
     - assets/imgs/Jordan.jpg
     - assets/imgs/LeBron.jpg
     - assets/imgs/ONeal.jpg
+    - assets/imgs/comming_soon.jpg
+    - assets/basketball.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
