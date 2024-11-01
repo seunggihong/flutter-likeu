@@ -83,6 +83,7 @@ flutter:
     - assets/imgs/LeBron.jpg
     - assets/imgs/ONeal.jpg
     - assets/imgs/comming_soon.jpg
+    - assets/imgs/booker.jpg
     - assets/basketball.png
     - .env
 

@@ -11,7 +11,7 @@ class PlayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> playerName = [
-      'Stephen Curry',
+      'Devin Booker',
       // 'Michael Jordan',
       // 'LeBron James',
       // 'Shaquille ONeal',
@@ -20,7 +20,7 @@ class PlayerCard extends StatelessWidget {
     ];
 
     List<String> playerImage = [
-      'assets/imgs/curry.jpg',
+      'assets/imgs/booker.jpg',
       // 'assets/imgs/Jordan.jpg',
       // 'assets/imgs/LeBron.jpg',
       // 'assets/imgs/ONeal.jpg',
