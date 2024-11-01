@@ -7,7 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox('users');
-  WidgetsFlutterBinding.ensureInitialized(); // 1번코드
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
   runApp(const MyApp());

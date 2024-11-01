@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
@@ -15,8 +13,6 @@ class CustomHeatMapMain extends StatefulWidget {
 }
 
 class _CustomHeatMapMain extends State<CustomHeatMapMain> {
-  /// Show Date Time and Accuracy Data sets.
-
   final hivebox = Hive.box('users');
 
   Map<DateTime, int> datasets = {};
@@ -90,7 +86,6 @@ class _CustomHeatMapMain extends State<CustomHeatMapMain> {
             colorsets: colorsets,
             onClick: (value) {
               _changeCommitCount(value);
-              log("$value");
             },
           ),
         ),

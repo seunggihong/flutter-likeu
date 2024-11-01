@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -46,7 +44,6 @@ class _CameraViewState extends State<CameraView> {
     setState(() {
       selectPlayer = players[0];
     });
-    log('${hivebox.get('percent')}');
     super.initState();
   }
 
@@ -70,19 +67,12 @@ class _CameraViewState extends State<CameraView> {
           var responseString = await res.stream.bytesToString();
           var jsonRes = json.decode(responseString);
 
-          log("${jsonRes[0]['similarity_percentage']}");
           setState(() {
             percentage = jsonRes[0]['similarity_percentage'];
           });
-          log("$percentage");
-
-          /// json data
-          ///
-        } else {
-          log("${res.statusCode}");
-        }
+        } else {}
       } catch (e) {
-        log("$e");
+        /// loging
       } finally {
         setState(() {
           isLoading = false;
