@@ -68,10 +68,10 @@ class _CameraViewState extends State<CameraView> {
           var responseString = await res.stream.bytesToString();
           var jsonRes = json.decode(responseString);
 
-          log("$jsonRes");
+          log("${jsonRes['data'][0]['similarity_percentage_total']}");
 
           setState(() {
-            percentage = jsonRes[0]['similarity_percentage'];
+            percentage = jsonRes['data'][0]['similarity_percentage_total'];
           });
         } else {}
       } catch (e) {
