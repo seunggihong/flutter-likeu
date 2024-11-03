@@ -15,7 +15,7 @@ class CustomHeatMapMain extends StatefulWidget {
 class _CustomHeatMapMain extends State<CustomHeatMapMain> {
   final hivebox = Hive.box('users');
 
-  Map<DateTime, int> datasets = {};
+  final Map<DateTime, int> datasets = {};
 
   /// Heatmap Color sets.
   Map<int, Color> colorsets = AppColors.heatMapColor;

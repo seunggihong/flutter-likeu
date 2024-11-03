@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -66,6 +67,8 @@ class _CameraViewState extends State<CameraView> {
         if (res.statusCode == 200) {
           var responseString = await res.stream.bytesToString();
           var jsonRes = json.decode(responseString);
+
+          log("$jsonRes");
 
           setState(() {
             percentage = jsonRes[0]['similarity_percentage'];
