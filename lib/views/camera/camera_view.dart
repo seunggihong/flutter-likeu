@@ -45,6 +45,7 @@ class _CameraViewState extends State<CameraView> {
     setState(() {
       selectPlayer = players[0];
     });
+    log("${hivebox.get('percent')}");
     super.initState();
   }
 
@@ -68,7 +69,7 @@ class _CameraViewState extends State<CameraView> {
           var responseString = await res.stream.bytesToString();
           var jsonRes = json.decode(responseString);
 
-          log("${jsonRes['data'][0]['similarity_percentage_total']}");
+          log("${jsonRes['data']}");
 
           setState(() {
             percentage = jsonRes['data'][0]['similarity_percentage_total'];
@@ -87,14 +88,15 @@ class _CameraViewState extends State<CameraView> {
           // ignore: use_build_context_synchronously
           context,
           CupertinoModalBottomSheetRoute(
-              builder: (_) => CustomBottomModal(
-                    isLoading: isLoading,
-                    percentage: percentage,
-                    selectPlayer: selectPlayer,
-                    userArmDegree: userArmDegree,
-                    userTiming: userTiming,
-                  ),
-              expanded: false),
+            builder: (_) => CustomBottomModal(
+              isLoading: isLoading,
+              percentage: percentage,
+              selectPlayer: selectPlayer,
+              userArmDegree: userArmDegree,
+              userTiming: userTiming,
+            ),
+            expanded: false,
+          ),
         );
       }
     }
