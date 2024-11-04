@@ -39,6 +39,9 @@ class _CameraViewState extends State<CameraView> {
 
   bool flag = false;
 
+  bool selectVideoFlag = false;
+  bool uploadFlag = false;
+
   /// Hive Database
   final hivebox = Hive.box('users');
 
@@ -74,9 +77,9 @@ class _CameraViewState extends State<CameraView> {
           log("$jsonRes");
 
           setState(() {
-            percentage = jsonRes['data'][0]['similarity_percentage_total'];
-            userArmDegree = jsonRes['diff_data'][0]['elbow_diff'].last;
-            userKneeDegree = jsonRes['diff_data'][0]['knee_diff'].last;
+            percentage = jsonRes['data']['similarity_percentage_total'];
+            userArmDegree = jsonRes['data']['elbow_diff'];
+            userKneeDegree = jsonRes['data']['knee_diff'];
           });
         } else {}
       } catch (e) {
@@ -121,6 +124,7 @@ class _CameraViewState extends State<CameraView> {
 
               /// Player Select Dropbox
               CustomText(text: "어떤 선수가 되고 싶나요?"),
+              20.h,
               Container(
                 alignment: Alignment.centerRight,
                 width: 200,
@@ -144,131 +148,150 @@ class _CameraViewState extends State<CameraView> {
                     onChanged: (value) {
                       setState(() {
                         selectPlayer = value!;
+                        selectVideoFlag = true;
                       });
                     },
                   ),
                 ),
               ),
-              20.h,
+              80.h,
 
-              /// Select User Video
-              CustomText(text: "비디오를 선택해 주세요!"),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  _video == null ? "SELECT" : "DONE",
-                  style: TextStyle(
-                      color: _video == null ? Colors.grey : Colors.green,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              CustomButton(
-                function: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) => Dialog(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: 300,
-                        height: 250,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              20.h,
-                              Text(
-                                "주의",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              20.h,
-                              Text(
-                                "옆 모습을 촬영한 비디오를 선택해주세요.\n옆모습이 아닌 경우에는 정확도가 많이 떨어질 수 있습니다.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              20.h,
-                              GestureDetector(
-                                onTap: () => {
-                                  setState(() {
-                                    flag = true;
-                                  }),
-                                  Navigator.pop(context)
-                                },
-                                child: Container(
-                                  width: 100,
-                                  height: 50,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 31, 161, 99),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        color: Colors.blueGrey, width: 2),
-                                  ),
-                                  child: Text(
-                                    "확인했습니다.",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+              AnimatedOpacity(
+                opacity: selectVideoFlag ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Column(
+                  children: [
+                    CustomText(text: "비디오를 선택해 주세요!"),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        _video == null ? "SELECT" : "DONE",
+                        style: TextStyle(
+                            color: _video == null ? Colors.grey : Colors.green,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
-                  );
+                    CustomButton(
+                      function: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              width: 300,
+                              height: 250,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    20.h,
+                                    Text(
+                                      "주의",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    20.h,
+                                    Text(
+                                      "옆 모습을 촬영한 비디오를 선택해주세요.\n옆모습이 아닌 경우에는 정확도가 많이 떨어질 수 있습니다.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    20.h,
+                                    GestureDetector(
+                                      onTap: () => {
+                                        setState(() {
+                                          flag = true;
+                                        }),
+                                        Navigator.pop(context)
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 31, 161, 99),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Colors.blueGrey, width: 2),
+                                        ),
+                                        child: Text(
+                                          "확인했습니다.",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
 
-                  if (flag) {
-                    final XFile? video =
-                        await _picker.pickVideo(source: ImageSource.gallery);
-                    setState(
-                      () {
-                        if (video != null) {
-                          _video = video;
+                        if (flag) {
+                          final XFile? video = await _picker.pickVideo(
+                              source: ImageSource.gallery);
+                          setState(
+                            () {
+                              if (video != null) {
+                                _video = video;
+                              }
+                              flag = false;
+                              uploadFlag = true;
+                            },
+                          );
                         }
-                        flag = false;
                       },
-                    );
-                  }
-                },
-                buttonName: _video == null ? 'Gallery' : 'Change',
+                      buttonName: _video == null ? 'Gallery' : 'Change',
+                    ),
+                  ],
+                ),
               ),
-              20.h,
 
-              /// Upload to Server from Flutter that User Video.
-              CustomText(text: "시작!"),
-              CustomButton(
-                function: () {
-                  if (_video != null && selectPlayer != 'Select Player') {
-                    requsetVideoToFlask(_video!);
-                  } else if (selectPlayer == 'Select Player') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Choose Player!")));
-                  } else if (_video == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Selected Video!"),
-                      ),
-                    );
-                  }
-                },
-                buttonName: 'Upload',
-              ),
+              80.h,
+              AnimatedOpacity(
+                opacity: uploadFlag ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Column(
+                  children: [
+                    /// Upload to Server from Flutter that User Video.
+                    CustomText(text: "시작!"),
+                    20.h,
+                    CustomButton(
+                      function: () {
+                        if (_video != null && selectPlayer != 'Select Player') {
+                          requsetVideoToFlask(_video!);
+                        } else if (selectPlayer == 'Select Player') {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Choose Player!")));
+                        } else if (_video == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Selected Video!"),
+                            ),
+                          );
+                        }
+                      },
+                      buttonName: 'Upload',
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -32,13 +32,11 @@ class _MainViewState extends State<MainView> {
             /// Custom Carouse Slider For Ad.
             const ADCarouselSlider(),
 
-            20.h,
-
-            20.h,
+            40.h,
 
             /// User Graph
             const Text(
-              'Your History',
+              'My History',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

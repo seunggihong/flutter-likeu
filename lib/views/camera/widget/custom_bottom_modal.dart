@@ -90,7 +90,9 @@ class CustomBottomModal extends StatelessWidget {
                         [
                           DateFormat("yyyyMMdd").format(DateTime.now()),
                           selectPlayer,
-                          percentage
+                          percentage,
+                          userArmDegree,
+                          userKneeDegree
                         ]
                       ]);
                     } else {
@@ -98,7 +100,9 @@ class CustomBottomModal extends StatelessWidget {
                       list.add([
                         DateFormat("yyyyMMdd").format(DateTime.now()),
                         selectPlayer,
-                        percentage
+                        percentage,
+                        userArmDegree,
+                        userKneeDegree
                       ]);
                       hivebox.put('percent', list);
                     }

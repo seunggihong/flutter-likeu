@@ -21,13 +21,13 @@ class CustomButton extends StatelessWidget {
         maximumSize: const Size(150, 50),
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(3),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       child: Text(
         buttonName,
         style: TextStyle(
-            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
