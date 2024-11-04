@@ -89,6 +89,7 @@ flutter:
     - assets/imgs/comming_soon.jpg
     - assets/imgs/booker.jpg
     - assets/basketball.png
+    - assets/empty.png
     - assets/splash/splash.png
     - .env
 

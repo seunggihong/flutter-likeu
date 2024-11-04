@@ -73,14 +73,31 @@ class _ChartViewState extends State<ChartView> {
         );
       }
     } else {
-      showList.add(Container(
-          decoration: BoxDecoration(color: Colors.white),
-          width: 300,
-          height: 300,
-          child: Text(
-            "No Data",
-            style: TextStyle(color: Colors.white),
-          )));
+      showList.add(
+        Container(
+          decoration: BoxDecoration(color: Colors.black),
+          child: Center(
+            child: Column(
+              children: [
+                20.h,
+                Image.asset(
+                  "assets/empty.png",
+                  width: 300,
+                  height: 300,
+                ),
+                Text(
+                  "아직 데이터가 없습니다!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
     }
 
     super.initState();

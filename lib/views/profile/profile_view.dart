@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/main/main_view.dart';
-import 'package:flutter_likeu/views/profile/widget/menu_card.dart';
 import 'package:flutter_likeu/views/profile/widget/heatmap_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

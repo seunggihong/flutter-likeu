@@ -12,19 +12,35 @@ class CustomBottomModal extends StatelessWidget {
     required this.percentage,
     required this.selectPlayer,
     required this.userArmDegree,
-    required this.userTiming,
+    required this.userKneeDegree,
   });
 
   final bool isLoading;
   final int percentage;
   final String? selectPlayer;
   final int userArmDegree;
-  final int userTiming;
+  final int userKneeDegree;
 
   @override
   Widget build(BuildContext context) {
     /// Hive Database
     final hivebox = Hive.box('users');
+
+    String text = '';
+
+    if (userArmDegree > 0) {
+      text =
+          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 $userArmDegree도 정도 더 구부려 보세요!\n';
+    } else if (userArmDegree < 0) {
+      text =
+          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 ${userArmDegree * -1}도 정도 더 펴 보세요!\n';
+    }
+
+    if (userKneeDegree > 0) {
+      text += '- 다리 각도를 $userKneeDegree도 정도 더 구부려 보세요!';
+    } else if (userKneeDegree < 0) {
+      text += '- 다리 각도를 ${userKneeDegree * -1}도 정도 더 펴 보세요!';
+    }
 
     return Container(
       height: 600,
@@ -55,7 +71,7 @@ class CustomBottomModal extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    "$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 $userArmDegree 정도 더 구부려 보세요!\n - 슛 타이밍을 약 $userTiming초 정도 더 빠르게 해보세요!",
+                    text,
                     style: TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
