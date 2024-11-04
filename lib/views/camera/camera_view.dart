@@ -34,8 +34,9 @@ class _CameraViewState extends State<CameraView> {
 
   /// User Simillar
   int percentage = 0;
-  int userArmDegree = 20;
-  int userTiming = 1;
+  int userArmDegree = 0;
+  int userKneeDegree = 0;
+  int userTiming = 0;
 
   /// Hive Database
   final hivebox = Hive.box('users');
@@ -69,10 +70,12 @@ class _CameraViewState extends State<CameraView> {
           var responseString = await res.stream.bytesToString();
           var jsonRes = json.decode(responseString);
 
-          log("${jsonRes['data']}");
+          log("$jsonRes");
 
           setState(() {
             percentage = jsonRes['data'][0]['similarity_percentage_total'];
+            userArmDegree = jsonRes['diff_data'][0]['elbow_diff'].last;
+            userKneeDegree = jsonRes['diff_data'][0]['knee_diff'].last;
           });
         } else {}
       } catch (e) {
@@ -93,7 +96,7 @@ class _CameraViewState extends State<CameraView> {
               percentage: percentage,
               selectPlayer: selectPlayer,
               userArmDegree: userArmDegree,
-              userTiming: userTiming,
+              userKneeDegree: userKneeDegree,
             ),
             expanded: false,
           ),
