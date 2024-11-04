@@ -30,16 +30,16 @@ class CustomBottomModal extends StatelessWidget {
 
     if (userArmDegree > 0) {
       text =
-          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 $userArmDegree도 정도 더 구부려 보세요!\n';
+          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 $userArmDegree° 정도 더 구부려 보세요!\n';
     } else if (userArmDegree < 0) {
       text =
-          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 ${userArmDegree * -1}도 정도 더 펴 보세요!\n';
+          '$selectPlayer와 비슷해지기 위해서는\n - 팔 각도를 ${userArmDegree * -1}° 정도 더 펴 보세요!\n';
     }
 
     if (userKneeDegree > 0) {
-      text += '- 다리 각도를 $userKneeDegree도 정도 더 구부려 보세요!';
+      text += '- 다리 각도를 $userKneeDegree° 정도 더 구부려 보세요!';
     } else if (userKneeDegree < 0) {
-      text += '- 다리 각도를 ${userKneeDegree * -1}도 정도 더 펴 보세요!';
+      text += '- 다리 각도를 ${userKneeDegree * -1}° 정도 더 펴 보세요!';
     }
 
     return Container(
