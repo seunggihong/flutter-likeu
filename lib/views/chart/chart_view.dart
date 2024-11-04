@@ -37,34 +37,67 @@ class _ChartViewState extends State<ChartView> {
                       .format(DateTime.parse((element[0]))),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(element[1]),
-                AnimatedCircularChart(
-                  size: const Size(150, 150),
-                  initialChartData: <CircularStackEntry>[
-                    CircularStackEntry(
-                      <CircularSegmentEntry>[
-                        CircularSegmentEntry(
-                          element[2].toDouble(),
-                          Colors.green,
-                          rankKey: 'completed',
-                        ),
-                        CircularSegmentEntry(
-                          100.0 - element[2].toDouble(),
-                          Colors.blueGrey[600],
-                          rankKey: 'remaining',
+                Text(
+                  element[1],
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Row(
+                  children: [
+                    AnimatedCircularChart(
+                      size: const Size(150, 150),
+                      initialChartData: <CircularStackEntry>[
+                        CircularStackEntry(
+                          <CircularSegmentEntry>[
+                            CircularSegmentEntry(
+                              element[2].toDouble(),
+                              Colors.green,
+                              rankKey: 'completed',
+                            ),
+                            CircularSegmentEntry(
+                              100.0 - element[2].toDouble(),
+                              Colors.blueGrey[600],
+                              rankKey: 'remaining',
+                            ),
+                          ],
+                          rankKey: 'progress',
                         ),
                       ],
-                      rankKey: 'progress',
+                      chartType: CircularChartType.Radial,
+                      percentageValues: true,
+                      holeLabel: "${element[2]}%",
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                      ),
                     ),
+                    10.w,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "팔 각도 ${element[3]}° 만큼 수정 필요.",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          "다리 각도 ${element[4]}° 만큼 수정 필요.",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      ],
+                    )
                   ],
-                  chartType: CircularChartType.Radial,
-                  percentageValues: true,
-                  holeLabel: "${element[2]}%",
-                  labelStyle: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                  ),
                 ),
                 20.h,
               ],
@@ -107,7 +140,7 @@ class _ChartViewState extends State<ChartView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chart"),
+        title: const Text("Histroy"),
       ),
       body: Center(
           child: ListView.builder(
