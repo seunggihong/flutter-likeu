@@ -36,7 +36,8 @@ class _CameraViewState extends State<CameraView> {
   int percentage = 0;
   int userArmDegree = 0;
   int userKneeDegree = 0;
-  int userTiming = 0;
+
+  bool flag = false;
 
   /// Hive Database
   final hivebox = Hive.box('users');
@@ -163,13 +164,87 @@ class _CameraViewState extends State<CameraView> {
               ),
               CustomButton(
                 function: () async {
-                  final XFile? video =
-                      await _picker.pickVideo(source: ImageSource.gallery);
-                  setState(() {
-                    if (video != null) {
-                      _video = video;
-                    }
-                  });
+                  await showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        width: 300,
+                        height: 250,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              20.h,
+                              Text(
+                                "주의",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              20.h,
+                              Text(
+                                "옆 모습을 촬영한 비디오를 선택해주세요.\n옆모습이 아닌 경우에는 정확도가 많이 떨어질 수 있습니다.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              20.h,
+                              GestureDetector(
+                                onTap: () => {
+                                  setState(() {
+                                    flag = true;
+                                  }),
+                                  Navigator.pop(context)
+                                },
+                                child: Container(
+                                  width: 100,
+                                  height: 50,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 31, 161, 99),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        color: Colors.blueGrey, width: 2),
+                                  ),
+                                  child: Text(
+                                    "확인했습니다.",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+
+                  if (flag) {
+                    final XFile? video =
+                        await _picker.pickVideo(source: ImageSource.gallery);
+                    setState(
+                      () {
+                        if (video != null) {
+                          _video = video;
+                        }
+                        flag = false;
+                      },
+                    );
+                  }
                 },
                 buttonName: _video == null ? 'Gallery' : 'Change',
               ),
