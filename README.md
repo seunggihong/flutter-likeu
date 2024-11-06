@@ -105,7 +105,7 @@
 
 ## 6. 데이터베이스 구성도 📌
 
-Flutter의 Hive NoSQL Database를 사용했다.
+Flutter의 Hive NoSQL Database를 사용했습니다.
 
 ```json
 
