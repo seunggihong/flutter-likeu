@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -21,14 +22,7 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  final players = [
-    'Select Player',
-    'player 1',
-    'player 2',
-    'player 3',
-    'player 4',
-    'player 5'
-  ];
+  final players = ['Select Player', 'booker', 'Comming Soon...'];
   String? selectPlayer;
 
   /// Video Select
@@ -39,9 +33,14 @@ class _CameraViewState extends State<CameraView> {
   bool isLoading = false;
 
   /// User Simillar
-  int percentage = 10;
-  int userArmDegree = 20;
-  int userTiming = 1;
+  int percentage = 0;
+  int userArmDegree = 0;
+  int userKneeDegree = 0;
+
+  bool flag = false;
+
+  bool selectVideoFlag = false;
+  bool uploadFlag = false;
 
   /// Hive Database
   final hivebox = Hive.box('users');
@@ -51,12 +50,12 @@ class _CameraViewState extends State<CameraView> {
     setState(() {
       selectPlayer = players[0];
     });
-    log('${hivebox.get('percent')}');
+    log("${hivebox.get('percent')}");
     super.initState();
   }
 
   Future<void> requsetVideoToFlask(XFile videoPath) async {
-    String serverUrl = dotenv.get("FLASK_URL");
+    String serverUrl = "${dotenv.get("FLASK_URL")}/${selectPlayer!}";
     setState(() {
       isLoading = true;
     });
@@ -72,13 +71,19 @@ class _CameraViewState extends State<CameraView> {
         var res = await req.send();
 
         if (res.statusCode == 200) {
-          log('$res');
+          var responseString = await res.stream.bytesToString();
+          var jsonRes = json.decode(responseString);
 
-          /// json data
-          ///
-        }
+          log("$jsonRes");
+
+          setState(() {
+            percentage = jsonRes['data']['similarity_percentage_total'];
+            userArmDegree = jsonRes['data']['elbow_diff'];
+            userKneeDegree = jsonRes['data']['knee_diff'];
+          });
+        } else {}
       } catch (e) {
-        log("$e");
+        /// loging
       } finally {
         setState(() {
           isLoading = false;
@@ -90,14 +95,15 @@ class _CameraViewState extends State<CameraView> {
           // ignore: use_build_context_synchronously
           context,
           CupertinoModalBottomSheetRoute(
-              builder: (_) => CustomBottomModal(
-                    isLoading: isLoading,
-                    percentage: percentage,
-                    selectPlayer: selectPlayer,
-                    userArmDegree: userArmDegree,
-                    userTiming: userTiming,
-                  ),
-              expanded: false),
+            builder: (_) => CustomBottomModal(
+              isLoading: isLoading,
+              percentage: percentage,
+              selectPlayer: selectPlayer,
+              userArmDegree: userArmDegree,
+              userKneeDegree: userKneeDegree,
+            ),
+            expanded: false,
+          ),
         );
       }
     }
@@ -117,10 +123,11 @@ class _CameraViewState extends State<CameraView> {
               60.h,
 
               /// Player Select Dropbox
-              CustomText(text: "What kind of Player?"),
+              CustomText(text: "어떤 선수가 되고 싶나요?"),
+              20.h,
               Container(
                 alignment: Alignment.centerRight,
-                width: 180,
+                width: 200,
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(10),
@@ -141,57 +148,150 @@ class _CameraViewState extends State<CameraView> {
                     onChanged: (value) {
                       setState(() {
                         selectPlayer = value!;
+                        selectVideoFlag = true;
                       });
                     },
                   ),
                 ),
               ),
-              20.h,
+              80.h,
 
-              /// Select User Video
-              CustomText(text: "Choose your Video!"),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  _video == null ? "SELECT" : "DONE",
-                  style: TextStyle(
-                      color: _video == null ? Colors.grey : Colors.green,
-                      fontWeight: FontWeight.bold),
+              AnimatedOpacity(
+                opacity: selectVideoFlag ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Column(
+                  children: [
+                    CustomText(text: "비디오를 선택해 주세요!"),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        _video == null ? "SELECT" : "DONE",
+                        style: TextStyle(
+                            color: _video == null ? Colors.grey : Colors.green,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    CustomButton(
+                      function: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              width: 300,
+                              height: 250,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    20.h,
+                                    Text(
+                                      "주의",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    20.h,
+                                    Text(
+                                      "옆 모습을 촬영한 비디오를 선택해주세요.\n옆모습이 아닌 경우에는 정확도가 많이 떨어질 수 있습니다.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    20.h,
+                                    GestureDetector(
+                                      onTap: () => {
+                                        setState(() {
+                                          flag = true;
+                                        }),
+                                        Navigator.pop(context)
+                                      },
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              255, 31, 161, 99),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Colors.blueGrey, width: 2),
+                                        ),
+                                        child: Text(
+                                          "확인했습니다.",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+
+                        if (flag) {
+                          final XFile? video = await _picker.pickVideo(
+                              source: ImageSource.gallery);
+                          setState(
+                            () {
+                              if (video != null) {
+                                _video = video;
+                              }
+                              flag = false;
+                              uploadFlag = true;
+                            },
+                          );
+                        }
+                      },
+                      buttonName: _video == null ? 'Gallery' : 'Change',
+                    ),
+                  ],
                 ),
               ),
-              CustomButton(
-                function: () async {
-                  final XFile? video =
-                      await _picker.pickVideo(source: ImageSource.gallery);
-                  setState(() {
-                    if (video != null) {
-                      _video = video;
-                    }
-                  });
-                },
-                buttonName: _video == null ? 'Gallery' : 'Change',
-              ),
-              20.h,
 
-              /// Upload to Server from Flutter that User Video.
-              CustomText(text: "Let's Started!"),
-              CustomButton(
-                function: () {
-                  if (_video != null && selectPlayer != 'Select Player') {
-                    requsetVideoToFlask(_video!);
-                  } else if (selectPlayer == 'Select Player') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Choose Player!")));
-                  } else if (_video == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Selected Video!"),
-                      ),
-                    );
-                  }
-                },
-                buttonName: 'Upload',
-              ),
+              80.h,
+              AnimatedOpacity(
+                opacity: uploadFlag ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 500),
+                child: Column(
+                  children: [
+                    /// Upload to Server from Flutter that User Video.
+                    CustomText(text: "시작!"),
+                    20.h,
+                    CustomButton(
+                      function: () {
+                        if (_video != null && selectPlayer != 'Select Player') {
+                          requsetVideoToFlask(_video!);
+                        } else if (selectPlayer == 'Select Player') {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Choose Player!")));
+                        } else if (_video == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Selected Video!"),
+                            ),
+                          );
+                        }
+                      },
+                      buttonName: 'Upload',
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

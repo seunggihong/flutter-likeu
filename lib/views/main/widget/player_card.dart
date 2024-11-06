@@ -11,19 +11,21 @@ class PlayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> playerName = [
-      'Stephen Curry',
-      'Michael Jordan',
-      'LeBron James',
-      'Shaquille ONeal',
-      'Magic Johnson'
+      'Devin Booker',
+      // 'Michael Jordan',
+      // 'LeBron James',
+      // 'Shaquille ONeal',
+      // 'Magic Johnson',
+      'Comming Soon...'
     ];
 
     List<String> playerImage = [
-      'assets/imgs/curry.jpg',
-      'assets/imgs/Jordan.jpg',
-      'assets/imgs/LeBron.jpg',
-      'assets/imgs/ONeal.jpg',
-      'assets/imgs/Johnson.jpg',
+      'assets/imgs/booker.jpg',
+      // 'assets/imgs/Jordan.jpg',
+      // 'assets/imgs/LeBron.jpg',
+      // 'assets/imgs/ONeal.jpg',
+      // 'assets/imgs/Johnson.jpg',
+      'assets/imgs/comming_soon.jpg'
     ];
 
     return CarouselSlider(
@@ -38,7 +40,7 @@ class PlayerCard extends StatelessWidget {
       ),
 
       /// Item List
-      items: [1, 2, 3, 4, 5].map(
+      items: [1, 2].map(
         (i) {
           return Builder(
             builder: (BuildContext context) {

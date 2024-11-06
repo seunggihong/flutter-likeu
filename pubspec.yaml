@@ -50,7 +50,13 @@ dependencies:
   flutter_dotenv: ^5.0.2
   intl: ^0.19.0
 
+<<<<<<< HEAD
   video_player: ^2.5.0
+=======
+  # Splash
+  flutter_native_splash: ^2.4.2
+  awesome_circular_chart: ^1.1.0
+>>>>>>> f9a61c1c3ae982997cb8e4467f6dd9eb50c31b85
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +90,11 @@ flutter:
     - assets/imgs/Jordan.jpg
     - assets/imgs/LeBron.jpg
     - assets/imgs/ONeal.jpg
+    - assets/imgs/comming_soon.jpg
+    - assets/imgs/booker.jpg
+    - assets/basketball.png
+    - assets/empty.png
+    - assets/splash/splash.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

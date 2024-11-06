@@ -1,13 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
 import 'package:flutter_likeu/views/camera/camera_view.dart';
-// import 'package:flutter_likeu/views/camera/camera_view.dart';
-
-/// Views
 import 'package:flutter_likeu/views/chart/chart_view.dart';
 import 'package:flutter_likeu/views/profile/profile_view.dart';
 
@@ -48,9 +43,6 @@ class Fab extends StatelessWidget {
           FloatingActionButton(
             heroTag: null,
             onPressed: () {
-              /// Open Camera func
-              log("Open Camera");
-
               /// test code
               Navigator.push(context,
                   CupertinoPageRoute(builder: (_) => const CameraView()));
@@ -69,8 +61,6 @@ class Fab extends StatelessWidget {
           FloatingActionButton(
             heroTag: null,
             onPressed: () {
-              /// Naviagtor < Chart View >
-              log("Open Chart View");
               Navigator.push(context,
                   CupertinoPageRoute(builder: (_) => const ChartView()));
             },
@@ -86,8 +76,6 @@ class Fab extends StatelessWidget {
           FloatingActionButton(
             heroTag: null,
             onPressed: () {
-              /// Navigator < Profile View >
-              log("Open Profile View");
               Navigator.push(context,
                   CupertinoPageRoute(builder: (_) => const ProfileView()));
             },

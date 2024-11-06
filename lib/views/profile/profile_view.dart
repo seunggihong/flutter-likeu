@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_likeu/extensions/space_exs.dart';
 import 'package:flutter_likeu/utils/app_colors.dart';
-import 'package:flutter_likeu/views/profile/widget/menu_card.dart';
+import 'package:flutter_likeu/views/main/main_view.dart';
 import 'package:flutter_likeu/views/profile/widget/heatmap_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -32,48 +35,150 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Profile"),
+      appBar: AppBar(
+        title: const Text("Profile"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            /// Show Profile Image and Name.
+            _loadProfileImageAndName(),
+
+            /// Show User Chart that commit date.
+            const CustomHeatMapViewer(),
+
+            /// Settings Menu.
+            _settingsMenuList(context)
+          ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              /// Show Profile Image and Name.
-              _loadProfileImageAndName(),
-
-              /// Show User Chart that commit date.
-              const CustomHeatMapViewer(),
-
-              /// Settings Menu.
-              _settingsMenuList(context)
-            ],
-          ),
-        ));
+      ),
+    );
   }
 
   /// Load Menu List.
   Widget _settingsMenuList(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SettingMenuCard(
-          menuNameString: "Menu Setting 1",
-        ),
-        SettingMenuCard(
-          menuNameString: "Menu Setting 2",
-        ),
-        SettingMenuCard(
-          menuNameString: "Menu Setting 3",
-        ),
-        SettingMenuCard(
-          menuNameString: "Menu Setting 4",
-        ),
-        SettingMenuCard(
-          menuNameString: "Menu Setting 5",
-        ),
-        Padding(padding: EdgeInsets.only(bottom: 100))
+        _deleteAllDataBtn(context),
+        Padding(
+          padding: EdgeInsets.only(bottom: 100),
+        )
       ],
+    );
+  }
+
+  /// 전체 데이터 지우기 메뉴 버튼
+  Widget _deleteAllDataBtn(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          CupertinoModalBottomSheetRoute(
+            builder: (_) => Container(
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "전체 데이터를 삭제 하시겠습니까?\n(데이터를 삭제할 경우 복구하실 수 없습니다.)",
+                      style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.none,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    20.h,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => {
+                            hivebox.delete('name'),
+                            hivebox.delete('percent'),
+                            Navigator.pop(context),
+                            Navigator.pop(context),
+                            Navigator.pop(context),
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => MainView(),
+                              ),
+                            )
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.blueGrey,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              "네",
+                              style: TextStyle(
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        20.w,
+                        GestureDetector(
+                          onTap: () => {Navigator.pop(context)},
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              "아니요",
+                              style: TextStyle(
+                                color: Colors.black,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            expanded: false,
+          ),
+        )
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            Text(
+              "전체 데이터 지우기",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

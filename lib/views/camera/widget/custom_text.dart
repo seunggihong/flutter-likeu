@@ -13,7 +13,7 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 23),
     );
   }
 }
