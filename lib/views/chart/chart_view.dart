@@ -24,7 +24,7 @@ class _ChartViewState extends State<ChartView> {
         showList.add(
           Container(
             margin: EdgeInsets.all(10),
-            width: MediaQuery.of(context).size.width - 30,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
