@@ -127,7 +127,7 @@ class _CameraViewState extends State<CameraView> {
               20.h,
               Container(
                 alignment: Alignment.centerRight,
-                width: 200,
+                width: 220,
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(10),
